@@ -1,0 +1,258 @@
+#include <stdio.h>
+
+#include <conio.h>
+
+#define MAX 100
+
+void saisirTransactions(float tab[], int n)
+
+{
+
+    int i;
+
+    for (i = 0; i < n; i++)
+
+    {
+
+        printf("Montant de la transaction %d : ", i + 1);
+
+        scanf("%f", &tab[i]);
+
+    }
+
+}
+
+float calculTotal(float tab[], int n)
+
+{
+
+    int i;
+
+    float total = 0;
+
+    for (i = 0; i < n; i++)
+
+    {
+
+        total = total + tab[i];
+
+    }
+
+    return total;
+
+}
+
+float calculMoyenne(float tab[], int n)
+
+{
+
+    return calculTotal(tab, n) / n;
+
+}
+
+float trouverMaximum(float tab[], int n)
+
+{
+
+    int i;
+
+    float max = tab[0];
+
+    for (i = 1; i < n; i++)
+
+    {
+
+        if (tab[i] > max)
+
+        {
+
+            max = tab[i];
+
+        }
+
+    }
+
+    return max;
+
+}
+
+int compterSuspectes(float tab[], int n)
+
+{
+
+    int i;
+
+    int compteur = 0;
+
+    for (i = 0; i < n; i++)
+
+    {
+
+        if (tab[i] > 5000)
+
+        {
+
+            compteur++;
+
+        }
+
+    }
+
+    return compteur;
+
+}
+
+int main()
+
+{
+
+    float transactions[MAX];
+
+    int n;
+
+    int choix;
+
+    int i;
+
+    printf("=================================\n");
+
+    printf("   BANK TRANSACTION ANALYZER\n");
+
+    printf("=================================\n");
+
+    printf("\nNombre de transactions : ");
+
+    scanf("%d", &n);
+
+    while (n <= 0 || n > MAX)
+
+    {
+
+        printf("Nombre invalide. Donner un nombre entre 1 et %d : ", MAX);
+
+        scanf("%d", &n);
+
+    }
+
+    saisirTransactions(transactions, n);
+
+    do
+
+    {
+
+        printf("\n\n========== MENU ==========\n");
+
+        printf("1. Afficher les transactions\n");
+
+        printf("2. Calculer le total\n");
+
+        printf("3. Calculer la moyenne\n");
+
+        printf("4. Afficher la plus grande transaction\n");
+
+        printf("5. Detecter les transactions suspectes\n");
+
+        printf("0. Quitter\n");
+
+        printf("\nVotre choix : ");
+
+        scanf("%d", &choix);
+
+        if (choix == 1)
+
+        {
+
+            printf("\n--- Transactions ---\n");
+
+            for (i = 0; i < n; i++)
+
+            {
+
+                printf("Transaction %d : %.2f DT\n",
+
+                       i + 1, transactions[i]);
+
+            }
+
+        }
+
+        else if (choix == 2)
+
+        {
+
+            printf("\nTotal = %.2f DT\n",
+
+                   calculTotal(transactions, n));
+
+        }
+
+        else if (choix == 3)
+
+        {
+
+            printf("\nMoyenne = %.2f DT\n",
+
+                   calculMoyenne(transactions, n));
+
+        }
+
+        else if (choix == 4)
+
+        {
+
+            printf("\nPlus grande transaction = %.2f DT\n",
+
+                   trouverMaximum(transactions, n));
+
+        }
+
+        else if (choix == 5)
+
+        {
+
+            printf("\n--- Transactions suspectes ---\n");
+
+            for (i = 0; i < n; i++)
+
+            {
+
+                if (transactions[i] > 5000)
+
+                {
+
+                    printf("Transaction %d : %.2f DT -> SUSPECTE\n",
+
+                           i + 1, transactions[i]);
+
+                }
+
+            }
+
+            printf("\nNombre de transactions suspectes : %d\n",
+
+                   compterSuspectes(transactions, n));
+
+        }
+
+        else if (choix == 0)
+
+        {
+
+            printf("\nProgramme termine.\n");
+
+        }
+
+        else
+
+        {
+
+            printf("\nChoix invalide !\n");
+
+        }
+
+    } while (choix != 0);
+
+    getch();
+
+    return 0;
+}
